@@ -24,7 +24,7 @@ AModelo::AModelo()
 		MaterialVidrio = MatVidrio.Object;
 	}
 
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> cargadorModelo(TEXT("/Game/Modelos/basico_mm"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> cargadorModelo(TEXT("/Game/Modelos/basico_mmNEW"));
 	UStaticMesh* modelo;
 	if (cargadorModelo.Succeeded()){
 		modelo = cargadorModelo.Object;
@@ -82,7 +82,7 @@ void AModelo::PostInitializeComponents()
 	Super::PostInitializeComponents();
 	if (!errorCargaModelo && BaseMat){
 		// Apertura de archivo de colores de los poligonos
-		ifstream colores("D:\\Facultad\\Proyecto de grado\\Subido\\trunk\\BotonLuz\\coloresPoligonos.cvs");
+		ifstream colores("D:\\Facultad\\Proyecto de grado\\NuevoRepo\\trunk\\coloresPoligonos.cvs");
 		// Color auxiliar
 		FLinearColor color;
 		// Componentes del color
@@ -128,6 +128,56 @@ void AModelo::PostInitializeComponents()
 	}
 }
 
+//Recargo Materiales
+void AModelo::RecargarMateriales()
+{
+	if (!errorCargaModelo && BaseMat){
+		// Apertura de archivo de colores de los poligonos
+		ifstream colores("D:\\Facultad\\Proyecto de grado\\NuevoRepo\\trunk\\coloresPoligonos.cvs");
+		// Color auxiliar
+		FLinearColor color;
+		// Componentes del color
+		float r;
+		float g;
+		float b;
+		// Si las componentes del archivo son -1 entonces el material a asignar es vidrio
+		float vidrio = -1;
+		// Indice de recorrida del archivo
+		int idPoligono = 0;
+		// Lectura de arhivo de colores, creacion de materiales dinamicos y asignacion en el modelo
+		while (colores)
+		{
+			string s;
+			if (!getline(colores, s)) break;
+			istringstream ss(s);
+			vector <string> record;
+			// Loop de datos de cada linea
+			while (ss)
+			{
+				string s;
+				if (!getline(ss, s, ',')) break;
+				record.push_back(s);
+			}
+			// Cargo valores de las componentes a variables
+			r = atof(record.at(0).c_str());
+			g = atof(record.at(1).c_str());
+			b = atof(record.at(2).c_str());
+			if (r != vidrio){
+				// Creo y agrego material a la lista del modelo
+				MaterialInst = UMaterialInstanceDynamic::Create(BaseMat, this);
+				modeloActor->SetMaterial(idPoligono, MaterialInst);
+				color = FLinearColor(r, g, b);
+				MaterialInst->SetVectorParameterValue("baseColor", color);
+				modeloActor->SetMaterial(idPoligono, MaterialInst);
+			}
+			else {
+				// Agrego vidrio a la lista de materiales
+				modeloActor->SetMaterial(idPoligono, MaterialVidrio);
+			}
+			idPoligono++;
+		}
+	}
+}
 
 // Called when the game starts or when spawned
 void AModelo::BeginPlay()

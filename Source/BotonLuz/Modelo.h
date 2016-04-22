@@ -24,6 +24,10 @@ public:
 	// Sets default values for this actor's properties
 	AModelo();
 
+	//Recargo Materiales
+	UFUNCTION(BlueprintCallable, Category = "Funciones Auxiliares")
+	void RecargarMateriales();
+	
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	
