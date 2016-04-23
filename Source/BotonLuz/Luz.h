@@ -5,7 +5,9 @@
 #include <string>
 #include "Components/ArrowComponent.h"
 #include "GameFramework/Actor.h"
+#include <list>
 #include "Luz.generated.h"
+
 
 using namespace std;
 

@@ -103,6 +103,14 @@ void ALuz::setPosicion(FVector posicion){
 }
 
 void ALuz::seleccionarActor(){
+	for (TActorIterator<ALuz> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+	{
+		ALuz* luz = *ActorItr;
+		luz->deseleccionarActor();
+	}
+	flechaX->SetHiddenInGame(false);
+	flechaY->SetHiddenInGame(false);
+	flechaZ->SetHiddenInGame(false);
 	flechaX->SetVisibility(true);
 	flechaY->SetVisibility(true);
 	flechaZ->SetVisibility(true);
@@ -111,6 +119,10 @@ void ALuz::seleccionarActor(){
 	colisionFlechaZ->SetCollisionProfileName(TEXT("BlockAll"));
 	seleccionado = true;
 	seleccionadoNuevo = false;
+
+	FString s = "Selecciona";
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, s);
+
 }
 
 void ALuz::aceptarSeleccion(){
@@ -124,8 +136,12 @@ void ALuz::deseleccionarActor(){
 	flechaX->SetArrowColor_New(FLinearColor::Red);
 	flechaY->SetArrowColor_New(FLinearColor::Green);
 	flechaZ->SetArrowColor_New(FLinearColor::Blue);
+	colisionFlechaX->SetCollisionProfileName(TEXT("OverlapAll"));
+	colisionFlechaY->SetCollisionProfileName(TEXT("OverlapAll"));
+	colisionFlechaZ->SetCollisionProfileName(TEXT("OverlapAll"));
 	seleccionado = false;
 	ejeSeleccionado = 0;
+	
 }
 
 void ALuz::onClickModelo(UPrimitiveComponent* pComponent){
