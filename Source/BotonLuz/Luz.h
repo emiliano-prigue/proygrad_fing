@@ -109,6 +109,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Seleccion")
 		void aceptarSeleccion();
 
+	// Solo seleccionar luz con esta funcion en el caso de que se este
+	// seleccionando desde el widget de la lista de luces en pantalla
+	UFUNCTION(BlueprintCallable, Category = "Seleccion")
+	void seleccionarDesdeLista();
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 		bool seleccionado;
 
@@ -117,4 +122,11 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 		int32 ejeSeleccionado;
+
+	// Este campo es para avisarle a la lista de luces en pantalla que debe
+	// marcar la linea como seleccionada
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Seleccion")
+	bool faltaSeleccionarLista;
+
+
 };

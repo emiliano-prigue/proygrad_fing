@@ -63,6 +63,7 @@ ALuz::ALuz()
 	seleccionado = false;
 	seleccionadoNuevo = false;
 	ejeSeleccionado = ' ';
+	faltaSeleccionarLista = false;
 }
 
 // Called when the game starts or when spawned
@@ -103,11 +104,13 @@ void ALuz::setPosicion(FVector posicion){
 }
 
 void ALuz::seleccionarActor(){
+	// Deseleccionar el resto de las luces
 	for (TActorIterator<ALuz> ActorItr(GetWorld()); ActorItr; ++ActorItr)
 	{
 		ALuz* luz = *ActorItr;
 		luz->deseleccionarActor();
 	}
+	// Selecciono esta
 	flechaX->SetHiddenInGame(false);
 	flechaY->SetHiddenInGame(false);
 	flechaZ->SetHiddenInGame(false);
@@ -119,9 +122,6 @@ void ALuz::seleccionarActor(){
 	colisionFlechaZ->SetCollisionProfileName(TEXT("BlockAll"));
 	seleccionado = true;
 	seleccionadoNuevo = false;
-
-	FString s = "Selecciona";
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, s);
 
 }
 
@@ -148,6 +148,12 @@ void ALuz::onClickModelo(UPrimitiveComponent* pComponent){
 	//FString s = "Selecciona";
 	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, s);
 	seleccionarActor();
+	faltaSeleccionarLista = true;
+}
+
+void ALuz::seleccionarDesdeLista(){
+	seleccionarActor();
+	false;
 }
 
 void ALuz::onClickFlechaX(UPrimitiveComponent* pComponent){
