@@ -18,5 +18,10 @@ class BOTONLUZ_API ULibreriaDeFunciones : public UBlueprintFunctionLibrary
 		// a la intensidad de una luz
 		UFUNCTION(BlueprintCallable, Category = "Funciones Auxiliares")
 		static float obtenerIntensidadLuz(ALight* luz);
+
+		UFUNCTION(BlueprintCallable, Category = "Funciones Auxiliares")
+		static float redondear(float aRedondear);
+
+
 	
 };

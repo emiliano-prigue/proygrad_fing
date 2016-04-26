@@ -103,6 +103,11 @@ void ALuz::setPosicion(FVector posicion){
 	modeloLuz->SetWorldLocation(posicion);
 }
 
+// Setear rotacion del actor
+void ALuz::setRotacion(FRotator rotacion){
+	luz->SetWorldRotation(rotacion);
+}
+
 void ALuz::seleccionarActor(){
 	// Deseleccionar el resto de las luces
 	for (TActorIterator<ALuz> ActorItr(GetWorld()); ActorItr; ++ActorItr)

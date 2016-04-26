@@ -69,6 +69,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Iluminacion")
 		void setPosicion(FVector posicion);
 
+	// Se rota solamente la luz, no el modelo ni las flechas
+	UFUNCTION(BlueprintCallable, Category = "Iluminacion")
+		void setRotacion(FRotator rotacion);
+
 	//----------------------------------------
 	// Funciones para manejar eventos de click
 	// ---------------------------------------
