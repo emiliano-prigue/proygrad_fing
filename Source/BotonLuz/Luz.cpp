@@ -88,9 +88,19 @@ void ALuz::Tick(float DeltaTime)
 
 }
 
+// Obtener intensidad de la luz
+float ALuz::getIntensidad(){
+	return luz->Intensity;
+}
+
 // Setear intensidad de la luz
 void ALuz::setIntensidad(float intensidad){
 	luz->SetIntensity(intensidad);
+}
+
+// Obtener color de la luz
+FLinearColor ALuz::getColor(){
+	return luz->LightColor;
 }
 
 // Setear color de la luz

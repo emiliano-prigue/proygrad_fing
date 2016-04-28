@@ -61,7 +61,13 @@ public:
 	// ----------------------------------------
 
 	UFUNCTION(BlueprintCallable, Category = "Iluminacion")
+		float getIntensidad();
+
+	UFUNCTION(BlueprintCallable, Category = "Iluminacion")
 		void setIntensidad(float intensidad);
+
+	UFUNCTION(BlueprintCallable, Category = "Iluminacion")
+		FLinearColor getColor();
 
 	UFUNCTION(BlueprintCallable, Category = "Iluminacion")
 		void setColor(FLinearColor color);
