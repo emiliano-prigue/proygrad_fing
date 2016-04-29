@@ -24,7 +24,7 @@ AModelo::AModelo()
 		MaterialVidrio = MatVidrio.Object;
 	}
 
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> cargadorModelo(TEXT("/Game/Modelos/basico_mmNEW"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> cargadorModelo(TEXT("/Game/Modelos/modeloBasico"));
 	UStaticMesh* modelo;
 	if (cargadorModelo.Succeeded()){
 		modelo = cargadorModelo.Object;
