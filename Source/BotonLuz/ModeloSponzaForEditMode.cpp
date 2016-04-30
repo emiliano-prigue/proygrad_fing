@@ -76,7 +76,14 @@ void AModeloSponzaForEditMode::PostInitializeComponents()
 	Super::PostInitializeComponents();
 	if (!errorCargaModelo){
 		// Apertura de archivo de colores de los poligonos
-		ifstream colores("D:\\Facultad\\Proyecto de grado\\RepoLimpio\\trunk\\coloresPoligonos-sponza.cvs");
+		FString replaceIn = "/Saved/Config/Windows/Game.ini";
+		FString replaceOut = "/coloresPoligonos-sponza.cvs";
+		FString FilePath;
+		FilePath = GGameIni.Replace(*replaceIn, *replaceOut);
+
+		std::string fString(TCHAR_TO_UTF8(*FilePath));
+
+		ifstream colores(fString);
 		// Color auxiliar
 		FLinearColor color;
 		// Componentes del color
@@ -119,7 +126,14 @@ void AModeloSponzaForEditMode::RecargarMateriales()
 {
 	if (!errorCargaModelo){
 		// Apertura de archivo de colores de los poligonos
-		ifstream colores("D:\\Facultad\\Proyecto de grado\\RepoLimpio\\trunk\\coloresPoligonos-sponza.cvs");
+		FString replaceIn = "/Saved/Config/Windows/Game.ini";
+		FString replaceOut = "/coloresPoligonos-sponza.cvs";
+		FString FilePath;
+		FilePath = GGameIni.Replace(*replaceIn, *replaceOut);
+
+		std::string fString(TCHAR_TO_UTF8(*FilePath));
+
+		ifstream colores(fString);
 		// Color auxiliar
 		FLinearColor color;
 		// Componentes del color
