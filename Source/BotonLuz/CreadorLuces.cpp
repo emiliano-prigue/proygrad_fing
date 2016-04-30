@@ -31,13 +31,14 @@ TArray <ALuz*> ACreadorLuces::ParsearArchivoLuces()
 	// Definiciones e inicializaciones
 	vector <vector <string> > data;
 	TArray<ALuz*> lucesCreadas;
-	ifstream infile("C:\\Users\\Tonga\\Documents\\Facultad\\Tesis\\Repositorio\\trunk\\BotonLuz\\archivoLuces.txt");
+	ifstream infile("C:\\Users\\Tonga\\Documents\\Facultad\\Tesis\\Repositorio\\proygrad_fing\\archivoLuces.txt");
 	UWorld* World = GetWorld();
 	FVector ubicacionLuz;
 	FRotator rotacionLuz;
 	FTransform ActorTransform = FTransform(ubicacionLuz);
 	FLinearColor color;
 	ALuz* actorLuz = NULL;
+	ALuzFocal* luzFocal;
 	int tipoLuz;
 	float posX;
 	float posY;
@@ -49,6 +50,8 @@ TArray <ALuz*> ACreadorLuces::ParsearArchivoLuces()
 	float colG;
 	float colB;
 	float intensidad;
+	float anguloConoInterior;
+	float anguloConoExterior;
 	int luzProcesando = 1;
 	bool errorLuz = false;
 
@@ -89,15 +92,21 @@ TArray <ALuz*> ACreadorLuces::ParsearArchivoLuces()
 		switch (tipoLuz){
 			// Puntual
 		case 1:
-			actorLuz = Cast<ALuzPuntual>(World->SpawnActor<ALuzPuntual>(ALuzPuntual::StaticClass(), ubicacionLuz, rotacionLuz));
+			actorLuz = Cast<ALuzPuntual>(World->SpawnActor<ALuzPuntual>(ALuzPuntual::StaticClass(), ubicacionLuz, FRotator(0, 0, 0)));
 			break;
 			// Direccional
 		case 2:
-			actorLuz = Cast<ALuzDireccional>(World->SpawnActor<ALuzDireccional>(ALuzDireccional::StaticClass(), ubicacionLuz, rotacionLuz));
+			actorLuz = Cast<ALuzDireccional>(World->SpawnActor<ALuzDireccional>(ALuzDireccional::StaticClass(), ubicacionLuz, FRotator(0,0,0)));
 			break;
 			// Focal
 		case 3:
-			actorLuz = Cast<ALuzFocal>(World->SpawnActor<ALuzFocal>(ALuzFocal::StaticClass(), ubicacionLuz, rotacionLuz));
+			// Leo valores de angulos extra para este tipo de luz
+			anguloConoInterior = atof(record.at(11).c_str());
+			anguloConoExterior = atof(record.at(12).c_str());
+			actorLuz = Cast<ALuzFocal>(World->SpawnActor<ALuzFocal>(ALuzFocal::StaticClass(), ubicacionLuz, FRotator(0, 0, 0)));
+			luzFocal = Cast<ALuzFocal>(actorLuz);
+			luzFocal->setAnguloConoInterior(anguloConoInterior);
+			luzFocal->setAnguloConoExterior(anguloConoExterior);
 			break;
 		default:
 			s = "Tipo de luz incorrecto: " + tipoLuz;
@@ -108,6 +117,7 @@ TArray <ALuz*> ACreadorLuces::ParsearArchivoLuces()
 			color = FLinearColor(colR, colG, colB);
 			actorLuz->setColor(color);
 			actorLuz->setIntensidad(intensidad);
+			actorLuz->setRotacion(rotX,rotY,rotZ);
 			lucesCreadas.Add(actorLuz);
 		}
 		luzProcesando++;

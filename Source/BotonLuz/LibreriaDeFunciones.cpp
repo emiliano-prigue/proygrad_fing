@@ -11,5 +11,9 @@ float ULibreriaDeFunciones::redondear(float aRedondear){
 	return floorf(aRedondear * 100) / 100;
 }
 
+FRotator ULibreriaDeFunciones::obtenerRotacionDeComponente(ULightComponent* luz){
+	return luz->GetComponentRotation();
+}
+
 
 

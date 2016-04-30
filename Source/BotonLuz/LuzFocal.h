@@ -14,6 +14,10 @@ class BOTONLUZ_API ALuzFocal : public ALuz
 	GENERATED_BODY()
 public:
 	ALuzFocal();
-	
-	
+
+	UFUNCTION(BlueprintCallable, Category = "LuzFocal")
+	void setAnguloConoInterior(float parAngulo);
+
+	UFUNCTION(BlueprintCallable, Category = "LuzFocal")
+	void setAnguloConoExterior(float parAngulo);
 };

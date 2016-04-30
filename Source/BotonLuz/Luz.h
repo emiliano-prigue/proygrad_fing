@@ -31,6 +31,17 @@ public:
 	// Componentes
 	// Nota: Se agregan las UBoxComponent porque las flechas de UE no tienen colisiones
 	// -----------
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Atributos")
+	FString tipoDeLuz;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Atributos")
+	float rotX;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Atributos")
+	float rotY;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Atributos")
+	float rotZ;
 
 	UPROPERTY(Category = StaticMeshActor, VisibleAnywhere, BlueprintReadOnly, Meta = (ExposeFunctionCategories = "Mesh,Rendering,Physics,Components|StaticMesh", AllowPrivateAccess = "true"))
 		UStaticMeshComponent * modeloLuz;
@@ -70,8 +81,11 @@ public:
 		void setPosicion(FVector posicion);
 
 	// Se rota solamente la luz, no el modelo ni las flechas
+	// rx= roll
+	// ry = pitch
+	// rz = yaw
 	UFUNCTION(BlueprintCallable, Category = "Iluminacion")
-		void setRotacion(FRotator rotacion);
+		void setRotacion(float rx, float ry, float rz);
 
 	//----------------------------------------
 	// Funciones para manejar eventos de click

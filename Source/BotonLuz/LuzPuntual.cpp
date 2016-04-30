@@ -5,6 +5,8 @@
 
 
 ALuzPuntual::ALuzPuntual(){
+	// Tipo de luz
+	tipoDeLuz = "Puntual";
 	// Modelo luz
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> cargadorModelo(TEXT("/Game/Modelos/Lightbulb"));
 	if (cargadorModelo.Succeeded()){

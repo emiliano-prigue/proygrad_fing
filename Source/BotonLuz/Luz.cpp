@@ -104,7 +104,11 @@ void ALuz::setPosicion(FVector posicion){
 }
 
 // Setear rotacion del actor
-void ALuz::setRotacion(FRotator rotacion){
+void ALuz::setRotacion(float rx, float ry, float rz){
+	FRotator rotacion = FRotator(ry, rz, rx);
+	rotX = rx;
+	rotY = ry;
+	rotZ = rz;
 	luz->SetWorldRotation(rotacion);
 }
 

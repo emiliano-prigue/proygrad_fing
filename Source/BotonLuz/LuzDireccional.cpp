@@ -4,6 +4,8 @@
 #include "LuzDireccional.h"
 
 ALuzDireccional::ALuzDireccional(){
+	// Tipo de luz
+	tipoDeLuz = "Direccional";
 	// Modelo luz
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> cargadorModelo(TEXT("/Game/Modelos/Lightbulb"));
 	if (cargadorModelo.Succeeded()){

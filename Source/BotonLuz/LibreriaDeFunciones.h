@@ -22,6 +22,8 @@ class BOTONLUZ_API ULibreriaDeFunciones : public UBlueprintFunctionLibrary
 		UFUNCTION(BlueprintCallable, Category = "Funciones Auxiliares")
 		static float redondear(float aRedondear);
 
+		UFUNCTION(BlueprintCallable, Category = "Funciones Auxiliares")
+		static FRotator obtenerRotacionDeComponente(ULightComponent* luz);
 
 	
 };
