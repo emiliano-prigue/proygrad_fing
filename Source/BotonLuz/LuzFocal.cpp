@@ -19,9 +19,20 @@ ALuzFocal::ALuzFocal(){
 	flechaZ->AttachTo(modeloLuz);
 }
 
+
+float ALuzFocal::getAnguloConoInterior(){
+	USpotLightComponent* spotLight = Cast<USpotLightComponent>(luz);
+	return spotLight->InnerConeAngle;
+}
+
 void ALuzFocal::setAnguloConoInterior(float parAngulo){
 	USpotLightComponent* spotLight = Cast<USpotLightComponent>(luz);
 	spotLight->SetInnerConeAngle(parAngulo);
+}
+
+float ALuzFocal::getAnguloConoExterior(){
+	USpotLightComponent* spotLight = Cast<USpotLightComponent>(luz); 
+	return spotLight->OuterConeAngle;
 }
 
 void ALuzFocal::setAnguloConoExterior(float parAngulo){

@@ -20,8 +20,15 @@ void AGuardarLuces::Tick( float DeltaTime )
 
 void AGuardarLuces::GuardarLucesArchivo()
 {
+	FString replaceIn = "/Saved/Config/Windows/Game.ini";
+	FString replaceOut = "/archivoLucesGuardadas.txt";
+	FString FilePath;
+	FilePath = GGameIni.Replace(*replaceIn, *replaceOut);
+	
+	std::string fString(TCHAR_TO_UTF8(*FilePath));
+	
 	ofstream archivoLuces;
-	archivoLuces.open("C:\\Users\\martinemr\\Documents\\Unreal Projects\\proygrad_fing\\archivoLucesGuardadas.txt");
+	archivoLuces.open(fString);
 
 	int tipoLuz;
 	for (TActorIterator<ALuz> ActorItr(GetWorld()); ActorItr; ++ActorItr)
@@ -46,26 +53,28 @@ void AGuardarLuces::GuardarLucesArchivo()
 
 		string caracteristicasFocal = "\n";
 		
-		/*
 		if (tipoLuz == 3)
 		{
-			ALuzFocal luzFocal = *Luz;
+			ALuzFocal* luzFocal = Cast<ALuzFocal>(Luz);
 			
-			float innerCone = luzFocal->innerCone;
-			float outerCone = luzFocal->outerCone;
-			caracteristicasFocal = "\n";
+			float innerCone = luzFocal->getAnguloConoInterior();
+			float outerCone = luzFocal->getAnguloConoExterior();
+			
+			archivoLuces << tipoLuz << ","
+				<< posicionLuz.X << "," << posicionLuz.Y << "," << posicionLuz.Z
+				<< rotaciónLuz.Roll << "," << rotaciónLuz.Pitch << "," << rotaciónLuz.Yaw
+				<< colorLuz.R << "," << colorLuz.G << "," << colorLuz.B
+				<< Luz->getIntensidad() << ","
+				<< innerCone << "," << outerCone << "\n";
 		}
 		else
 		{
-			caracteristicasFocal = "\n";
+			archivoLuces << tipoLuz << ","
+				<< posicionLuz.X << "," << posicionLuz.Y << "," << posicionLuz.Z
+				<< rotaciónLuz.Roll << "," << rotaciónLuz.Pitch << "," << rotaciónLuz.Yaw
+				<< colorLuz.R << "," << colorLuz.G << "," << colorLuz.B
+				<< Luz->getIntensidad() << "\n";
 		}
-		*/
-		
-		archivoLuces << tipoLuz << ","
-					<< posicionLuz.X << "," << posicionLuz.Y << "," << posicionLuz.Z 
-					<< rotaciónLuz.Roll << "," << rotaciónLuz.Pitch << "," << rotaciónLuz.Yaw
-					<< colorLuz.R << "," << colorLuz.G << "," << colorLuz.B
-					<< Luz->getIntensidad() << caracteristicasFocal;
 	}
 
 	archivoLuces.close();

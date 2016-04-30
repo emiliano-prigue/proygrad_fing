@@ -31,7 +31,15 @@ TArray <ALuz*> ACreadorLuces::ParsearArchivoLuces()
 	// Definiciones e inicializaciones
 	vector <vector <string> > data;
 	TArray<ALuz*> lucesCreadas;
-	ifstream infile("C:\\Users\\Tonga\\Documents\\Facultad\\Tesis\\Repositorio\\proygrad_fing\\archivoLuces.txt");
+
+	FString replaceIn = "/Saved/Config/Windows/Game.ini";
+	FString replaceOut = "/archivoLuces.txt";
+	FString FilePath;
+	FilePath = GGameIni.Replace(*replaceIn, *replaceOut);
+
+	std::string fString(TCHAR_TO_UTF8(*FilePath));
+
+	ifstream infile(fString);
 	UWorld* World = GetWorld();
 	FVector ubicacionLuz;
 	FRotator rotacionLuz;
