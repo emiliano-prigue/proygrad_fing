@@ -23,7 +23,7 @@ AModeloForEditMode::AModeloForEditMode()
 		BaseMat = MatObj.Object;
 	}
 
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> cargadorModelo(TEXT("/Game/Modelos/basico_mmNEW"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> cargadorModelo(TEXT("/Game/Modelos/modeloBasico"));
 	UStaticMesh* modelo;
 	if (cargadorModelo.Succeeded()){
 		modelo = cargadorModelo.Object;
@@ -76,7 +76,7 @@ void AModeloForEditMode::PostInitializeComponents()
 	Super::PostInitializeComponents();
 	if (!errorCargaModelo){
 		// Apertura de archivo de colores de los poligonos
-		ifstream colores("D:\\Facultad\\Proyecto de grado\\NuevoRepo\\trunk\\coloresPoligonos.cvs");
+		ifstream colores("D:\\Facultad\\Proyecto de grado\\RepoLimpio\\trunk\\coloresPoligonos.cvs");
 		// Color auxiliar
 		FLinearColor color;
 		// Componentes del color
@@ -119,7 +119,7 @@ void AModeloForEditMode::RecargarMateriales()
 {
 	if (!errorCargaModelo){
 		// Apertura de archivo de colores de los poligonos
-		ifstream colores("D:\\Facultad\\Proyecto de grado\\NuevoRepo\\trunk\\coloresPoligonos.cvs");
+		ifstream colores("D:\\Facultad\\Proyecto de grado\\RepoLimpio\\trunk\\coloresPoligonos.cvs");
 		// Color auxiliar
 		FLinearColor color;
 		// Componentes del color

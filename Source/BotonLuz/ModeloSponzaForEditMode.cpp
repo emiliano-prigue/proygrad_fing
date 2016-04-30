@@ -76,7 +76,7 @@ void AModeloSponzaForEditMode::PostInitializeComponents()
 	Super::PostInitializeComponents();
 	if (!errorCargaModelo){
 		// Apertura de archivo de colores de los poligonos
-		ifstream colores("D:\\Facultad\\Proyecto de grado\\NuevoRepo\\trunk\\coloresPoligonos-sponza.cvs");
+		ifstream colores("D:\\Facultad\\Proyecto de grado\\RepoLimpio\\trunk\\coloresPoligonos-sponza.cvs");
 		// Color auxiliar
 		FLinearColor color;
 		// Componentes del color
@@ -119,7 +119,7 @@ void AModeloSponzaForEditMode::RecargarMateriales()
 {
 	if (!errorCargaModelo){
 		// Apertura de archivo de colores de los poligonos
-		ifstream colores("D:\\Facultad\\Proyecto de grado\\NuevoRepo\\trunk\\coloresPoligonos-sponza.cvs");
+		ifstream colores("D:\\Facultad\\Proyecto de grado\\RepoLimpio\\trunk\\coloresPoligonos-sponza.cvs");
 		// Color auxiliar
 		FLinearColor color;
 		// Componentes del color
