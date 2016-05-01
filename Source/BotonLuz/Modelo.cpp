@@ -18,8 +18,8 @@ AModelo::AModelo()
 	if (MatObj.Succeeded()){
 		BaseMat = MatObj.Object;
 	}
-
-	static ConstructorHelpers::FObjectFinder<UMaterial> MatVidrio(TEXT("Material'/Game/StarterContent/Materials/M_Glass.M_Glass'"));
+	
+	static ConstructorHelpers::FObjectFinder<UMaterial> MatVidrio(TEXT("Material'/Game/Materiales/M_Glass2.M_Glass2'"));
 	if (MatVidrio.Succeeded()){
 		MaterialVidrio = MatVidrio.Object;
 	}
@@ -57,11 +57,7 @@ AModelo::AModelo()
 	modeloNuevo->SourceModels[0].RawMeshBulkData->SaveRawMesh(rawMesh);
 
 	for (int32 i = 0; i < rawMesh.FaceMaterialIndices.Num(); i++){
-		if (100 > i){
-			modeloNuevo->Materials.Add(MaterialVidrio);
-		} else {
-			modeloNuevo->Materials.Add(BaseMat);
-		}
+		modeloNuevo->Materials.Add(MaterialVidrio);
 	}
 
 	TArray<FText> BuildErrorsNuevo;

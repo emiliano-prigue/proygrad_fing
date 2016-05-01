@@ -19,7 +19,7 @@ AModeloSponza::AModeloSponza()
 		BaseMat = MatObj.Object;
 	}
 
-	static ConstructorHelpers::FObjectFinder<UMaterial> MatVidrio(TEXT("Material'/Game/StarterContent/Materials/M_Glass.M_Glass'"));
+	static ConstructorHelpers::FObjectFinder<UMaterial> MatVidrio(TEXT("Material'/Game/Materiales/M_Glass2.M_Glass2'"));
 	if (MatVidrio.Succeeded()){
 		MaterialVidrio = MatVidrio.Object;
 	}
