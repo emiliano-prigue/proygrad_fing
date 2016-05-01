@@ -61,18 +61,18 @@ void AGuardarLuces::GuardarLucesArchivo()
 			float outerCone = luzFocal->getAnguloConoExterior();
 			
 			archivoLuces << tipoLuz << ","
-				<< posicionLuz.X << "," << posicionLuz.Y << "," << posicionLuz.Z
-				<< rotaciónLuz.Roll << "," << rotaciónLuz.Pitch << "," << rotaciónLuz.Yaw
-				<< colorLuz.R << "," << colorLuz.G << "," << colorLuz.B
+				<< posicionLuz.X << "," << posicionLuz.Y << "," << posicionLuz.Z << ","
+				<< rotaciónLuz.Roll << "," << rotaciónLuz.Pitch << "," << rotaciónLuz.Yaw << ","
+				<< colorLuz.R << "," << colorLuz.G << "," << colorLuz.B << ","
 				<< Luz->getIntensidad() << ","
 				<< innerCone << "," << outerCone << "\n";
 		}
 		else
 		{
 			archivoLuces << tipoLuz << ","
-				<< posicionLuz.X << "," << posicionLuz.Y << "," << posicionLuz.Z
-				<< rotaciónLuz.Roll << "," << rotaciónLuz.Pitch << "," << rotaciónLuz.Yaw
-				<< colorLuz.R << "," << colorLuz.G << "," << colorLuz.B
+				<< posicionLuz.X << "," << posicionLuz.Y << "," << posicionLuz.Z << ","
+				<< rotaciónLuz.Roll << "," << rotaciónLuz.Pitch << "," << rotaciónLuz.Yaw << ","
+				<< colorLuz.R << "," << colorLuz.G << "," << colorLuz.B << ","
 				<< Luz->getIntensidad() << "\n";
 		}
 	}
