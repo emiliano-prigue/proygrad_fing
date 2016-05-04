@@ -62,7 +62,7 @@ void AGuardarLuces::GuardarLucesArchivo()
 			
 			archivoLuces << tipoLuz << ","
 				<< posicionLuz.X << "," << posicionLuz.Y << "," << posicionLuz.Z << ","
-				<< rotaciónLuz.Roll << "," << rotaciónLuz.Pitch << "," << rotaciónLuz.Yaw << ","
+				<< Luz->rotX << "," << Luz->rotY << "," << Luz->rotZ << ","
 				<< colorLuz.R << "," << colorLuz.G << "," << colorLuz.B << ","
 				<< Luz->getIntensidad() << ","
 				<< innerCone << "," << outerCone << "\n";
@@ -71,7 +71,7 @@ void AGuardarLuces::GuardarLucesArchivo()
 		{
 			archivoLuces << tipoLuz << ","
 				<< posicionLuz.X << "," << posicionLuz.Y << "," << posicionLuz.Z << ","
-				<< rotaciónLuz.Roll << "," << rotaciónLuz.Pitch << "," << rotaciónLuz.Yaw << ","
+				<< Luz->rotX << "," << Luz->rotY << "," << Luz->rotZ << ","
 				<< colorLuz.R << "," << colorLuz.G << "," << colorLuz.B << ","
 				<< Luz->getIntensidad() << "\n";
 		}
