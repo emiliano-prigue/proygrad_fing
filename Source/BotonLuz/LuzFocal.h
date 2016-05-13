@@ -15,11 +15,13 @@ class BOTONLUZ_API ALuzFocal : public ALuz
 public:
 	ALuzFocal();
 
+	UFUNCTION(BlueprintCallable, Category = "LuzFocal")
 	float getAnguloConoInterior();
 
 	UFUNCTION(BlueprintCallable, Category = "LuzFocal")
 	void setAnguloConoInterior(float parAngulo);
 
+	UFUNCTION(BlueprintCallable, Category = "LuzFocal")
 	float getAnguloConoExterior();
 
 	UFUNCTION(BlueprintCallable, Category = "LuzFocal")
