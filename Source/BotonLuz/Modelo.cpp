@@ -135,6 +135,9 @@ void AModelo::PostInitializeComponents()
 void AModelo::RecargarMateriales()
 {
 	if (!errorCargaModelo && BaseMat){
+		//Arranco el cálculo del tiempo de ejecución
+		clock_t start = clock();
+		double duration;
 		// Apertura de archivo de colores de los poligonos
 		FString replaceIn = "/Saved/Config/Windows/Game.ini";
 		FString replaceOut = "/coloresPoligonos.cvs";
@@ -186,6 +189,23 @@ void AModelo::RecargarMateriales()
 			}
 			idPoligono++;
 		}
+
+		//Calculo el timpo de ejecución
+		duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
+		//Escribo en archivo
+		FString replaceInWrite = "/Saved/Config/Windows/Game.ini";
+		FString replaceOutWrite = "/archivoTiempoEjecución.txt";
+		FString FilePathWrite;
+		FilePathWrite = GGameIni.Replace(*replaceInWrite, *replaceOutWrite);
+
+		std::string fStringWrite(TCHAR_TO_UTF8(*FilePathWrite));
+
+		ofstream archivoLuces;
+		archivoLuces.open(fStringWrite);
+
+		archivoLuces << duration << "," << "\n";
+
+		archivoLuces.close();
 	}
 }
 
