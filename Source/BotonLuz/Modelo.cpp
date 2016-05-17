@@ -194,7 +194,7 @@ void AModelo::RecargarMateriales()
 		duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
 		//Escribo en archivo
 		FString replaceInWrite = "/Saved/Config/Windows/Game.ini";
-		FString replaceOutWrite = "/archivoTiempoEjecución.txt";
+		FString replaceOutWrite = "/archivoTiempoEjecucion.txt";
 		FString FilePathWrite;
 		FilePathWrite = GGameIni.Replace(*replaceInWrite, *replaceOutWrite);
 

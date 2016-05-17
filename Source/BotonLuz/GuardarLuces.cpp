@@ -2,23 +2,7 @@
 #include "BotonLuz.h"
 #include "GuardarLuces.h"
 
-
-AGuardarLuces::AGuardarLuces()
-{
-	PrimaryActorTick.bCanEverTick = true;
-}
-
-void AGuardarLuces::BeginPlay()
-{
-	Super::BeginPlay();
-}
-
-void AGuardarLuces::Tick( float DeltaTime )
-{
-	Super::Tick( DeltaTime );
-}
-
-void AGuardarLuces::GuardarLucesArchivo()
+void UGuardarLuces::GuardarLucesArchivo(UObject* Context)
 {
 	FString replaceIn = "/Saved/Config/Windows/Game.ini";
 	FString replaceOut = "/archivoLucesGuardadas.txt";
@@ -30,8 +14,8 @@ void AGuardarLuces::GuardarLucesArchivo()
 	ofstream archivoLuces;
 	archivoLuces.open(fString);
 
-	int tipoLuz;
-	for (TActorIterator<ALuz> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+	int tipoLuz = 1;
+	for (TActorIterator<ALuz> ActorItr(GEngine->GetWorldFromContextObject(Context)); ActorItr; ++ActorItr)
 	{
 		ALuz* Luz = *ActorItr;
 		if (Luz->IsA(ALuzPuntual::StaticClass()))

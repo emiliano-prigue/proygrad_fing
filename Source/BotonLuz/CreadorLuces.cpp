@@ -3,30 +3,7 @@
 #include "BotonLuz.h"
 #include "CreadorLuces.h"
 
-
-// Sets default values
-ACreadorLuces::ACreadorLuces()
-{
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-
-}
-
-// Called when the game starts or when spawned
-void ACreadorLuces::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
-
-// Called every frame
-void ACreadorLuces::Tick( float DeltaTime )
-{
-	Super::Tick( DeltaTime );
-
-}
-
-TArray <ALuz*> ACreadorLuces::ParsearArchivoLuces()
+TArray <ALuz*> UCreadorLuces::ParsearArchivoLuces(UObject* Context)
 {
 	// Definiciones e inicializaciones
 	vector <vector <string> > data;
@@ -40,7 +17,7 @@ TArray <ALuz*> ACreadorLuces::ParsearArchivoLuces()
 	std::string fString(TCHAR_TO_UTF8(*FilePath));
 
 	ifstream infile(fString);
-	UWorld* World = GetWorld();
+	UWorld* World = GEngine->GetWorldFromContextObject(Context);
 	FVector ubicacionLuz;
 	FRotator rotacionLuz;
 	FTransform ActorTransform = FTransform(ubicacionLuz);

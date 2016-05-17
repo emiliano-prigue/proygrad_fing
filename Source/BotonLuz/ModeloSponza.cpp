@@ -46,8 +46,8 @@ AModeloSponza::AModeloSponza()
 	FStaticMeshSourceModel* sourceModel = &modelo->SourceModels[0];
 	FRawMesh rawMesh;
 	sourceModel->RawMeshBulkData->LoadRawMesh(rawMesh);
-	int32 cantTriangles = rawMesh.FaceMaterialIndices.Max();
-	for (int32 i = 0; i < rawMesh.FaceMaterialIndices.Num(); i++){
+	//int32 cantTriangles = rawMesh.FaceMaterialIndices.Max();
+	for (int32 i = 0; i < rawMesh.FaceMaterialIndices.Max(); i++){
 		rawMesh.FaceMaterialIndices[i] = i;
 	}
 
@@ -56,7 +56,7 @@ AModeloSponza::AModeloSponza()
 	new(modeloNuevo->SourceModels) FStaticMeshSourceModel();
 	modeloNuevo->SourceModels[0].RawMeshBulkData->SaveRawMesh(rawMesh);
 
-	for (int32 i = 0; i < rawMesh.FaceMaterialIndices.Num(); i++){
+	for (int32 i = 0; i < rawMesh.FaceMaterialIndices.Max(); i++){
 		if (100 > i){
 			modeloNuevo->Materials.Add(MaterialVidrio);
 		} else {
@@ -121,7 +121,7 @@ void AModeloSponza::PostInitializeComponents()
 			if (r != vidrio){
 				// Creo y agrego material a la lista del modelo
 				MaterialInst = UMaterialInstanceDynamic::Create(BaseMat, this);
-				modeloActor->SetMaterial(idPoligono, MaterialInst);
+				//modeloActor->SetMaterial(idPoligono, MaterialInst);
 				color = FLinearColor(r, g, b);
 				MaterialInst->SetVectorParameterValue("baseColor", color);
 				modeloActor->SetMaterial(idPoligono, MaterialInst);
@@ -139,9 +139,12 @@ void AModeloSponza::PostInitializeComponents()
 void AModeloSponza::RecargarMateriales()
 {
 	if (!errorCargaModelo && BaseMat){
+		//Arranco el cálculo del tiempo de ejecución
+		clock_t start = clock();
+		double duration;
 		// Apertura de archivo de colores de los poligonos
 		FString replaceIn = "/Saved/Config/Windows/Game.ini";
-		FString replaceOut = "/coloresPoligonos-sponza.cvs";
+		FString replaceOut = "/coloresPoligonos-sponza.csv";
 		FString FilePath;
 		FilePath = GGameIni.Replace(*replaceIn, *replaceOut);
 
@@ -190,6 +193,23 @@ void AModeloSponza::RecargarMateriales()
 			}
 			idPoligono++;
 		}
+
+		//Calculo el timpo de ejecución
+		duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
+		//Escribo en archivo
+		FString replaceInWrite = "/Saved/Config/Windows/Game.ini";
+		FString replaceOutWrite = "/archivoTiempoEjecucion.txt";
+		FString FilePathWrite;
+		FilePathWrite = GGameIni.Replace(*replaceInWrite, *replaceOutWrite);
+
+		std::string fStringWrite(TCHAR_TO_UTF8(*FilePathWrite));
+
+		ofstream archivoLuces;
+		archivoLuces.open(fStringWrite);
+
+		archivoLuces << duration << "," << "\n";
+
+		archivoLuces.close();
 	}
 }
 
