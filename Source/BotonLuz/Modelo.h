@@ -7,6 +7,7 @@
 #include <sstream>
 #include <vector>
 #include <ctime>
+#include <chrono>
 #include "GameFramework/Actor.h"
 #include "UnrealEd.h"
 #include "Developer/RawMesh/Public/RawMesh.h"

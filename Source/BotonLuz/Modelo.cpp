@@ -135,9 +135,22 @@ void AModelo::PostInitializeComponents()
 void AModelo::RecargarMateriales()
 {
 	if (!errorCargaModelo && BaseMat){
+		//ofstream archivoLuces;
+		//double total = 0;
+		//Abro el archivo
+		//FString replaceInWrite = "/Saved/Config/Windows/Game.ini";
+		//FString replaceOutWrite = "/archivoTiempoEjecucion.txt";
+		//FString FilePathWrite;
+		//FilePathWrite = GGameIni.Replace(*replaceInWrite, *replaceOutWrite);
+		//std::string fStringWrite(TCHAR_TO_UTF8(*FilePathWrite));
+		//archivoLuces.open(fStringWrite, std::ios_base::app);
+
+
 		//Arranco el cálculo del tiempo de ejecución
-		clock_t start = clock();
-		double duration;
+		std::chrono::time_point<std::chrono::system_clock> startC, endC;
+		startC = std::chrono::system_clock::now();
+		//clock_t start = clock();
+		//double duration;
 		// Apertura de archivo de colores de los poligonos
 		FString replaceIn = "/Saved/Config/Windows/Game.ini";
 		FString replaceOut = "/coloresPoligonos.cvs";
@@ -191,21 +204,19 @@ void AModelo::RecargarMateriales()
 		}
 
 		//Calculo el timpo de ejecución
-		duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
+		endC = std::chrono::system_clock::now();
+		std::chrono::duration<double> elapsed_seconds = endC - startC;
+		std::time_t end_time = std::chrono::system_clock::to_time_t(endC);
+		//double end = clock();
+		//duration = (end - start);
+		double cps = (double)CLOCKS_PER_SEC;
+		//duration = duration/cps;
+
 		//Escribo en archivo
-		FString replaceInWrite = "/Saved/Config/Windows/Game.ini";
-		FString replaceOutWrite = "/archivoTiempoEjecucion.txt";
-		FString FilePathWrite;
-		FilePathWrite = GGameIni.Replace(*replaceInWrite, *replaceOutWrite);
+		//archivoLuces.precision(10);
+		//archivoLuces << elapsed_seconds.count() << "\n";
 
-		std::string fStringWrite(TCHAR_TO_UTF8(*FilePathWrite));
-
-		ofstream archivoLuces;
-		archivoLuces.open(fStringWrite);
-
-		archivoLuces << duration << "," << "\n";
-
-		archivoLuces.close();
+		//archivoLuces.close();
 	}
 }
 

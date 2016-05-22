@@ -24,7 +24,8 @@ AModeloSponza::AModeloSponza()
 		MaterialVidrio = MatVidrio.Object;
 	}
 
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> cargadorModelo(TEXT("/Game/Modelos/sponzaForRadiosity2"));
+	//static ConstructorHelpers::FObjectFinder<UStaticMesh> cargadorModelo(TEXT("/Game/Modelos/sponzaForRadiosity2"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> cargadorModelo(TEXT("/Game/Modelos/sponza"));
 	UStaticMesh* modelo;
 	if (cargadorModelo.Succeeded()){
 		modelo = cargadorModelo.Object;
@@ -46,8 +47,8 @@ AModeloSponza::AModeloSponza()
 	FStaticMeshSourceModel* sourceModel = &modelo->SourceModels[0];
 	FRawMesh rawMesh;
 	sourceModel->RawMeshBulkData->LoadRawMesh(rawMesh);
-	//int32 cantTriangles = rawMesh.FaceMaterialIndices.Max();
-	for (int32 i = 0; i < rawMesh.FaceMaterialIndices.Max(); i++){
+	int32 cantTriangles = rawMesh.FaceMaterialIndices.Max();
+	for (int32 i = 0; i < rawMesh.FaceMaterialIndices.Num(); i++){
 		rawMesh.FaceMaterialIndices[i] = i;
 	}
 
@@ -56,7 +57,7 @@ AModeloSponza::AModeloSponza()
 	new(modeloNuevo->SourceModels) FStaticMeshSourceModel();
 	modeloNuevo->SourceModels[0].RawMeshBulkData->SaveRawMesh(rawMesh);
 
-	for (int32 i = 0; i < rawMesh.FaceMaterialIndices.Max(); i++){
+	for (int32 i = 0; i < rawMesh.FaceMaterialIndices.Num(); i++){
 		if (100 > i){
 			modeloNuevo->Materials.Add(MaterialVidrio);
 		} else {
@@ -81,6 +82,78 @@ void AModeloSponza::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 	if (!errorCargaModelo && BaseMat){
+		// Apertura de archivo de colores de los poligonos
+		FString replaceIn = "/Saved/Config/Windows/Game.ini";
+		FString replaceOut = "/coloresPoligonos-sponza.cvs";
+		//FString replaceOut = "/radTecho.cvs";
+		FString FilePath;
+		FilePath = GGameIni.Replace(*replaceIn, *replaceOut);
+
+		std::string fString(TCHAR_TO_UTF8(*FilePath));
+
+		ifstream colores(fString);
+		// Color auxiliar
+		FLinearColor color;
+		// Componentes del color
+		float r;
+		float g;
+		float b;
+		// Si las componentes del archivo son -1 entonces el material a asignar es vidrio
+		float vidrio = -1;
+		// Indice de recorrida del archivo
+		int idPoligono = 0;
+		// Lectura de arhivo de colores, creacion de materiales dinamicos y asignacion en el modelo
+		while (colores)
+		{
+			string s;
+			if (!getline(colores, s)) break;
+			istringstream ss(s);
+			vector <string> record;
+			// Loop de datos de cada linea
+			while (ss)
+			{
+				string s;
+				if (!getline(ss, s, ',')) break;
+				record.push_back(s);
+			}
+			// Cargo valores de las componentes a variables
+			r = atof(record.at(0).c_str());
+			g = atof(record.at(1).c_str());
+			b = atof(record.at(2).c_str());
+			if (r != vidrio){
+				// Creo y agrego material a la lista del modelo
+				MaterialInst = UMaterialInstanceDynamic::Create(BaseMat, this);
+				modeloActor->SetMaterial(idPoligono, MaterialInst);
+				color = FLinearColor(r, g, b);
+				MaterialInst->SetVectorParameterValue("baseColor", color);
+				modeloActor->SetMaterial(idPoligono, MaterialInst);
+			}
+			else {
+				// Agrego vidrio a la lista de materiales
+				modeloActor->SetMaterial(idPoligono, MaterialVidrio);
+			}
+			idPoligono++;
+		}
+	}
+}
+
+//Recargo Materiales
+void AModeloSponza::RecargarMateriales()
+{
+	if (!errorCargaModelo && BaseMat){
+		//ofstream archivoLuces;
+		//double total = 0;
+		//Abro el archivo
+		//FString replaceInWrite = "/Saved/Config/Windows/Game.ini";
+		//FString replaceOutWrite = "/archivoTiempoEjecucion-sponza.txt";
+		//FString FilePathWrite;
+		//FilePathWrite = GGameIni.Replace(*replaceInWrite, *replaceOutWrite);
+		//std::string fStringWrite(TCHAR_TO_UTF8(*FilePathWrite));
+		//archivoLuces.open(fStringWrite, std::ios_base::app);
+
+		//Arranco el c·lculo del tiempo de ejecuciÛn
+		//clock_t start = clock();
+		//double duration;
 		// Apertura de archivo de colores de los poligonos
 		FString replaceIn = "/Saved/Config/Windows/Game.ini";
 		FString replaceOut = "/coloresPoligonos-sponza.cvs";
@@ -121,67 +194,6 @@ void AModeloSponza::PostInitializeComponents()
 			if (r != vidrio){
 				// Creo y agrego material a la lista del modelo
 				MaterialInst = UMaterialInstanceDynamic::Create(BaseMat, this);
-				//modeloActor->SetMaterial(idPoligono, MaterialInst);
-				color = FLinearColor(r, g, b);
-				MaterialInst->SetVectorParameterValue("baseColor", color);
-				modeloActor->SetMaterial(idPoligono, MaterialInst);
-			}
-			else {
-				// Agrego vidrio a la lista de materiales
-				modeloActor->SetMaterial(idPoligono, MaterialVidrio);
-			}
-			idPoligono++;
-		}
-	}
-}
-
-//Recargo Materiales
-void AModeloSponza::RecargarMateriales()
-{
-	if (!errorCargaModelo && BaseMat){
-		//Arranco el c√°lculo del tiempo de ejecuci√≥n
-		clock_t start = clock();
-		double duration;
-		// Apertura de archivo de colores de los poligonos
-		FString replaceIn = "/Saved/Config/Windows/Game.ini";
-		FString replaceOut = "/coloresPoligonos-sponza.csv";
-		FString FilePath;
-		FilePath = GGameIni.Replace(*replaceIn, *replaceOut);
-
-		std::string fString(TCHAR_TO_UTF8(*FilePath));
-
-		ifstream colores(fString);
-		// Color auxiliar
-		FLinearColor color;
-		// Componentes del color
-		float r;
-		float g;
-		float b;
-		// Si las componentes del archivo son -1 entonces el material a asignar es vidrio
-		float vidrio = -1;
-		// Indice de recorrida del archivo
-		int idPoligono = 0;
-		// Lectura de arhivo de colores, creacion de materiales dinamicos y asignacion en el modelo
-		while (colores)
-		{
-			string s;
-			if (!getline(colores, s)) break;
-			istringstream ss(s);
-			vector <string> record;
-			// Loop de datos de cada linea
-			while (ss)
-			{
-				string s;
-				if (!getline(ss, s, ',')) break;
-				record.push_back(s);
-			}
-			// Cargo valores de las componentes a variables
-			r = atof(record.at(0).c_str());
-			g = atof(record.at(1).c_str());
-			b = atof(record.at(2).c_str());
-			if (r != vidrio){
-				// Creo y agrego material a la lista del modelo
-				MaterialInst = UMaterialInstanceDynamic::Create(BaseMat, this);
 				modeloActor->SetMaterial(idPoligono, MaterialInst);
 				color = FLinearColor(r, g, b);
 				MaterialInst->SetVectorParameterValue("baseColor", color);
@@ -194,22 +206,13 @@ void AModeloSponza::RecargarMateriales()
 			idPoligono++;
 		}
 
-		//Calculo el timpo de ejecuci√≥n
-		duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
+		//Calculo el timpo de ejecuciÛn
+		//duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
 		//Escribo en archivo
-		FString replaceInWrite = "/Saved/Config/Windows/Game.ini";
-		FString replaceOutWrite = "/archivoTiempoEjecucion.txt";
-		FString FilePathWrite;
-		FilePathWrite = GGameIni.Replace(*replaceInWrite, *replaceOutWrite);
+		//archivoLuces.precision(10);
+		//archivoLuces << duration << "\n";
 
-		std::string fStringWrite(TCHAR_TO_UTF8(*FilePathWrite));
-
-		ofstream archivoLuces;
-		archivoLuces.open(fStringWrite);
-
-		archivoLuces << duration << "," << "\n";
-
-		archivoLuces.close();
+		//archivoLuces.close();
 	}
 }
 
