@@ -1,6 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "BotonLuz.h"
 #include "ModeloSponza.h"
 
@@ -24,7 +23,6 @@ AModeloSponza::AModeloSponza()
 		MaterialVidrio = MatVidrio.Object;
 	}
 
-	//static ConstructorHelpers::FObjectFinder<UStaticMesh> cargadorModelo(TEXT("/Game/Modelos/sponzaForRadiosity2"));
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> cargadorModelo(TEXT("/Game/Modelos/sponza"));
 	UStaticMesh* modelo;
 	if (cargadorModelo.Succeeded()){

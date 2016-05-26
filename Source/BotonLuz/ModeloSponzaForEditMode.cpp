@@ -23,7 +23,7 @@ AModeloSponzaForEditMode::AModeloSponzaForEditMode()
 		BaseMat = MatObj.Object;
 	}
 
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> cargadorModelo(TEXT("/Game/Modelos/sponzaForRadiosity2"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> cargadorModelo(TEXT("/Game/Modelos/sponza"));
 	UStaticMesh* modelo;
 	if (cargadorModelo.Succeeded()){
 		modelo = cargadorModelo.Object;
