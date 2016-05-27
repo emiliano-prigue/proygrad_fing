@@ -1,10 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
-
+#include <iostream>
+#include <fstream>
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "LibreriaDeFunciones.generated.h"
 
+using namespace std;
 /**
  * 
  */
@@ -25,5 +27,6 @@ class BOTONLUZ_API ULibreriaDeFunciones : public UBlueprintFunctionLibrary
 		UFUNCTION(BlueprintCallable, Category = "Funciones Auxiliares")
 		static FRotator obtenerRotacionDeComponente(ULightComponent* luz);
 
-	
+		UFUNCTION(BlueprintCallable, Category = "Funciones Auxiliares")
+		static void grabarArchivoModelo(FString contenido);
 };
